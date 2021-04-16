@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Blog - Entradas{% endblock %}
+{% block content %}
+    <h2>Publicaciones</h2>
+    {% if entrys %}
+        {% for entry in entrys %}
+            <h3><a href = "{% url 'entrys:singleEntry' entry.id %}">{{ entry.title }}</a></h3>
+            <span>{{ entry.publishedDate }}</span>
+            <p>{{ entry.content | safe | truncatewords:50 }}</p>
+        {% endfor %}
+    {% else %}
+        <p>No hay entradas.</p>
+    {% endif %}
+{% endblock %}

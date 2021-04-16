@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Blog - {{ entry.title }}{% endblock %}
+{% block content %}
+    <h2>{{ entry.title }}</h2>
+    <span>{{ entry.publishedDate }}</span><a href = "{% url 'entrys:index' %}"> < Atras </a>
+    <p>{{ entry.content | safe }}</p>
+    <p>{{ error }}</p>
+    <form action="{% url 'entrys:commentEntry' entry.id %}" method="post">
+        {% csrf_token %}
+        <label for="POST-name">Nombre:</label>
+        <input id="POST-name" type="text" name="username" placeholder="Nombre de usuario">
+        <textarea name="content" placeholder="¿Que piensas del post?"></textarea>
+        <input type="submit" value="comment">
+    </form>
+    {% if comments %}
+        {% for comment in comments %}
+            <h3>Usuario: {{ comment.username }}</h3>
+            <span>{{ comment.publishedDatetime }}</span>
+            <p>{{ comment.content }}</p>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No hay comentarios.</p>
+    {% endif %}
+{% endblock %}
