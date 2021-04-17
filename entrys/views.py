@@ -6,8 +6,10 @@ from .models import Entry, Comment
 
 
 def index(request):
-    entrys = Entry.objects.all()
-    return render(request, "entrys/index.html", {'entrys':entrys})
+    aux = Entry.objects.all()
+    n = 3
+    entrys = [aux[i:i + n] for i in range(0, len(aux), n)] # lo parte en cada tres
+    return render(request, "entrys/index.html", {'packEntrys':entrys})
 
 def singleEntry(request, entryId):
     entry = get_object_or_404(Entry, pk=entryId)

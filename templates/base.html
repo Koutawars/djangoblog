@@ -2,12 +2,21 @@
 <html lang="es">
 <head>
     {# <link rel="stylesheet" href="style.css"> #}
+    {% load static %}
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-material-design.min.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}Blog{% endblock %}</title>
 </head>
 
 <body>
-    <div id="content">
+    <div class="container">
         {% block content %}{% endblock %}
     </div>
+    {% block js %}{% endblock %}
+    
+    <script type="text/javascript" src="{% static 'js/bootstrap-material-design.js' %}" > </script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.2.1.slim.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'js/popper.js' %}" ></script>
 </body>
 </html>

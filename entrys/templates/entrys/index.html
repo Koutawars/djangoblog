@@ -1,12 +1,25 @@
 {% extends "base.html" %}
 {% block title %}Blog - Entradas{% endblock %}
 {% block content %}
+    <div class="mt-3"></div>
     <h2>Publicaciones</h2>
-    {% if entrys %}
-        {% for entry in entrys %}
-            <h3><a href = "{% url 'entrys:singleEntry' entry.id %}">{{ entry.title }}</a></h3>
-            <span>{{ entry.publishedDate }}</span>
-            <p>{{ entry.content | safe | truncatewords:50 }}</p>
+    {% if packEntrys %}
+        {% for entrys in packEntrys %}
+            <div class="card-deck">
+                {% for entry in entrys %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ entry.title }}</h5>
+                            <p class="card-text">{{ entry.content | safe | truncatewords:15 }}</p>
+                            <a href="{% url 'entrys:singleEntry' entry.id %}" class="btn btn-primary">Ver más</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">{{ entry.publishedDate }}</small>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="mb-3"></div>
         {% endfor %}
     {% else %}
         <p>No hay entradas.</p>
