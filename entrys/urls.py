@@ -3,7 +3,7 @@ from . import views
 
 app_name = 'entrys'
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('<int:entryId>/', views.singleEntry, name='singleEntry'),
+    path('', views.index.as_view(), name='index'),
+    path('<int:pk>/', views.singleEntry.as_view(), name='singleEntry'),
     path('<int:entryId>/comment', views.commentEntry, name='commentEntry')
 ]

@@ -1,24 +1,28 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
+from django.views import generic
+
 
 from .models import Entry, Comment
 
 
-def index(request):
-    aux = Entry.objects.all()
-    n = 3
-    entrys = [aux[i:i + n] for i in range(0, len(aux), n)] # lo parte en cada tres
-    return render(request, "entrys/index.html", {'packEntrys':entrys})
+class index(generic.ListView):
+    template_name = "entrys/index.html"
+    model = Entry
+    context_object_name = "entrys"
+    paginate_by = 4
 
-def singleEntry(request, entryId):
-    entry = get_object_or_404(Entry, pk=entryId)
-    try: 
-        comments = Comment.objects.filter(entryId = entry)
-    except:
-        comments = [] 
-    return render(request, "entrys/entry.html", {'entry':entry, 'comments':comments})
+class singleEntry(generic.DetailView):
+    template_name = "entrys/entry.html"
+    model = Entry
+    context_object_name = "entry"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = Comment.objects.filter(id=self.kwargs['pk'])
+        return context
+    
 def commentEntry(request, entryId):
         entry = get_object_or_404(Entry, pk=entryId)
         comments = Comment.objects.filter(entryId = entry)
