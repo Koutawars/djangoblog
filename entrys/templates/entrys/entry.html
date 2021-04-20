@@ -7,14 +7,20 @@
     <p>{{ error }}</p>
     <form action="{% url 'entrys:commentEntry' entry.id %}" method="post">
         {% csrf_token %}
-        <label for="POST-name">Nombre:</label>
-        <input id="POST-name" type="text" name="username" placeholder="Nombre de usuario">
-        <textarea name="content" placeholder="¿Que piensas del post?"></textarea>
-        <input type="submit" value="comment">
+        <div class="row justify-content-md-center">
+            <div class="form-group col-3"> 
+                <label for="username" class="bmd-label-floating">Nombre</label>
+                <input type="text" name="username" class="form-control" id="username">
+            </div>
+            <div class="form-group col-6">
+                <textarea placeholder="Contenido" name="content" class="form-control" id="content" rows="3"></textarea>
+            </div>
+            <input class="btn btn-raised btn-primary my-3" type="submit" value="comment">
+        </div>
     </form>
     {% if comments %}
         {% for comment in comments %}
-            <h3>Usuario: {{ comment.username }}</h3>
+            <h4>Usuario: {{ comment.username }}</h4>
             <span>{{ comment.publishedDatetime }}</span>
             <p>{{ comment.content }}</p>
             <hr>
