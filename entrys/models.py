@@ -8,7 +8,7 @@ class Entry(models.Model):
         return "[" + self.id +  "] " + self.title
 class Comment(models.Model):
     username = models.CharField(max_length=50)
-    content = models.CharField(max_length=500)
+    content = models.TextField()
     publishedDatetime = models.DateTimeField(auto_now_add=True) 
     entryId = models.ForeignKey(Entry, on_delete=models.CASCADE) 
     class Meta:
