@@ -6,10 +6,10 @@
     <div class="row justify-content-md-center">
         <div class="col col-lg-8">
             {% if form.errors %}
-                <div style="height: 55%;">
+                <div style="height: 45%;">
                 </div>
             {% else %}
-                <div style="height: 65%;">
+                <div style="height: 55%;">
                 </div>
             {% endif %} 
             <form method="POST" action="{% url 'accounts:login' %}">
@@ -24,6 +24,7 @@
                 </div>
                 <input type="submit" class="btn btn-outline-primary" value="Login">
             </form>
+            <p class="font-italic"> ¿No tienes una cuenta? puedes crearla dando clic<a href="{% url 'accounts:register' %}"> acá.</a> </p>
             {% if form.errors %}
                 <div class="alert alert-danger">
                     Cuenta o contraseña incorrecta.
