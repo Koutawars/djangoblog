@@ -1,22 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    {# <link rel="stylesheet" href="style.css"> #}
-    {% load static %}
-    {% block css %}{% endblock %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-material-design.min.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}Blog{% endblock %}</title>
-</head>
+    <head>
+        {# <link rel="stylesheet" href="style.css"> #}
+        {% load static %}
+        {% block css %}{% endblock %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-material-design.min.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Blog{% endblock %}</title>
+    </head>
 
-<body>
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
-    {% block js %}{% endblock %}
-    
-    <script type="text/javascript" src="{% static 'js/bootstrap-material-design.js' %}" > </script>
-    <script type="text/javascript" src="{% static 'js/jquery-3.2.1.slim.min.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'js/popper.js' %}" ></script>
-</body>
+    <body>
+        {% block navbar %}
+        <nav class="navbar sticky-top navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'entrys:index' %}">Mi blog</a>
+            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                        <p class="d-inline-flex mb-0">Bienvenido, {{user.first_name}} {{user.last_name}}</p>
+                        <a href="{% url 'accounts:logout' %}?next={{request.path}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="#e74c3c" fill-rule="evenodd" d="M3 3.25c0-.966.784-1.75 1.75-1.75h5.5a.75.75 0 010 1.5h-5.5a.25.25 0 00-.25.25v17.5c0 .138.112.25.25.25h5.5a.75.75 0 010 1.5h-5.5A1.75 1.75 0 013 20.75V3.25zm16.006 9.5l-3.3 3.484a.75.75 0 001.088 1.032l4.5-4.75a.75.75 0 000-1.032l-4.5-4.75a.75.75 0 00-1.088 1.032l3.3 3.484H10.75a.75.75 0 000 1.5h8.256z"></path></svg>
+                        </a>
+                    {% else %}
+                        <a class="btn btn-primary" href="{% url 'accounts:login' %}?next={{request.path}}">
+                            Login
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+        {% endblock %}
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+        {% block js %}{% endblock %}
+        
+        <script type="text/javascript" src="{% static 'js/jquery-3.2.1.slim.min.js' %}" ></script>
+        <script type="text/javascript" src="{% static 'js/popper.js' %}" ></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap-material-design.js' %}" > </script>
+        <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+    </body>
 </html>
